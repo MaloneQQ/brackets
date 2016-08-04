@@ -76,17 +76,11 @@ function watchPath(path, ignored) {
     }
 
     try {
-        console.log("Start watcher at: " + path);
-        
-        ignored = ignored || ["**/node_modules/**", "**/.git/**", "**/.svn/**"];
-        console.log("ignored: " + ignored);
-
         var watcher = chokidar.watch(path, {
             persistent: true,
             ignoreInitial: true,
             ignorePermissionErrors: true,
             followSymlinks: true,
-            // TODO: configurable? And maybe unwatch file/folder filtered in the current search
             ignored: ignored
         });
 
@@ -115,7 +109,6 @@ function watchPath(path, ignored) {
                 return;
             }
 
-            console.log([parent, type, name, stats]);
             _domainManager.emitEvent("fileWatcher", "change", [parent, type, name, stats]);
         });
 
